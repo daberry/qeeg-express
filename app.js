@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var qeegParser = require('./lib/qeeg-parser');
+//var qeegParser = require('./lib/qeeg-parser');
+var qeegLib = require('./lib/qeeg-lib');
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+qeegLib.qeegParse();
 var app = express();
 
 // view engine setup
