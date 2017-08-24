@@ -15,6 +15,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "edf": "0.0.3",
+    "edf-parser": "^0.2.2",
     "edflib": "^1.0.0",
     "ejs": "^2.5.6",
     "ejs-lint": "^0.3.0",

@@ -1,0 +1,2 @@
+Version,Subject,Recording,Startdate,Startime,Bytes,Reserved,NumRec,Duration,NumSig
+0       ,Russo' John    Birth Date 25.06.34                                              ,Cadwell Easy II  21-Jan-2016                                                    ,21.01.16,14.36.18,768     ,                                            ,43,27      ,2

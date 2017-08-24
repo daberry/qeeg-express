@@ -2,7 +2,7 @@ util	= require "util"
 edf		= require "./edf"
 
 # Create a new instance of edf.EDFFile.
-my_edf = new edf.EDFFile "./TEST 23_12_15 11_27_06 01.20 to 20.00.rec"
+my_edf = new edf.EDFFile "../TEST 23_12_15 11_27_06 01.20 to 20.00.rec"
 
 # Get some information about the file.
 file_duration	= my_edf.get_file_duration( )
