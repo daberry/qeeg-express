@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 var qeegLib = require('./lib/qeeg-lib');
 var index = require('./routes/index');
 var users = require('./routes/users');
-qeegLib.qeegParse();
+//qeegLib.qeegParse();
+qeegLib.asciiParse();
 var app = express();
 
 // view engine setup
