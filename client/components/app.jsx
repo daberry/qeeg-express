@@ -2,6 +2,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      rawData: [],
       datum: [{
         key: "qEEG test data",
         values: []
@@ -11,23 +12,29 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    console.log('app component mounted');
     $.ajax({
       type: 'GET',
       url: '/qeeg/data',
       success: function (dataPoints) {
-        alert(dataPoints.length, 'top of success callback');
-        dataPoints = dataPoints.split('\n').map((cur) => {
-          return parseFloat(cur.replace('[','').replace(']',''));
+        console.log('success callback, # datapoints: ', dataPoints.length);
+        this.setState({
+          rawData: dataPoints
         });
-        console.log(dataPoints.length, 'parsed dem points');
+        dataPoints = dataPoints.split('\n').map((cur, i) => {
+          return {
+            x: i / 200,
+            y: parseFloat(cur.replace('[', '').replace(']', ''))
+          };
+        });
+
+
         this.setState({
           datum: [{
             key: "qEEG test data",
             values: dataPoints
           }]
         });
-        console.log('qeeg data loaded');
+        console.log('qeeg data loaded', dataPoints);
       }.bind(this),
       error: function (err) {
         console.log('problem fetching qeeg data ', err);
@@ -37,8 +44,7 @@ class App extends React.Component {
 
   render() {
     return (
-
-      <NVD3Chart id="lineChart" type="lineChart" datum={this.state.datum} x="time" y="data" />
+      <NVD3Chart id="lineChart" type="lineChart" datum={this.state.datum} x="time" y="data" height="600" yDomain={[-50,50]} />
     );
   }
 }

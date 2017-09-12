@@ -5,15 +5,16 @@
   <title>Line Chart</title>
 
   <!-- SCRIPTS -->
-  <script type="text/javascript" src="../../node_modules/d3/d3.min.js"></script>
-  <script type="text/javascript" src="../../node_modules/nvd3/build/nv.d3.min.js"></script>
-  <script type="text/javascript" src="../../node_modules/react/dist/react-with-addons.js"></script>
-  <script type="text/javascript" src="../../node_modules/react-dom/dist/react-dom.js"></script>
-  <script type="text/javascript" src="../../dist/react-nvd3.js"></script>
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
+  <script type="text/javascript" src="../bower_components/nvd3/build/nv.d3.min.js"></script>
+  <script type="text/javascript" src="../bower_components/react/react-with-addons.js"></script>
+  <script type="text/javascript" src="../bower_components/react/react-dom.js"></script>
+  <script type="text/javascript" src="../bower_components/react-nvd3/dist/react-nvd3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 
   <!-- STYLESHEETS -->
-  <link rel="stylesheet" type="text/css" href="../../node_modules/nvd3/build/nv.d3.min.css">
+  <link rel="stylesheet" type="text/css" href="../bower_components/nvd3/build/nv.d3.min.css">
 
   <style type="text/css">
     #lineChart svg {
@@ -23,6 +24,8 @@
 </head>
 <body>
   <div id="lineChart"></div>
-  <script src="index.js" type="text/babel"></script>
+  <div id="app"></div>
+  <!-- <script src="index.js" type="text/babel"></script> -->
+  <script src="../components/compiled/app.js" type="text/babel"></script>
 </body>
 </html>
