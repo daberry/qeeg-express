@@ -16,6 +16,11 @@ class App extends React.Component {
       type: 'GET',
       url: '/qeeg/data',
       success: function (dataPoints) {
+        alert(dataPoints.length, 'top of success callback');
+        dataPoints = dataPoints.split('\n').map((cur) => {
+          return parseFloat(cur.replace('[','').replace(']',''));
+        });
+        console.log(dataPoints.length, 'parsed dem points');
         this.setState({
           datum: [{
             key: "qEEG test data",
