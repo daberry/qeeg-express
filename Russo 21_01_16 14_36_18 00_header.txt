@@ -1,0 +1,10 @@
+Identification code: 0
+Local subject identification: Russo, John    Birth Date 25.06.34
+Local recording identification: Cadwell Easy II  21-Jan-2016
+Startdate of recording: 21.01.16
+Starttime of recording: 14.36.18
+Number of bytes in header record: 768
+Version of data format: 
+Number of data records: 43
+Duration of a data record: 27 seconds
+Number of channels in data record: 2

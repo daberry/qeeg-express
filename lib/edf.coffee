@@ -37,8 +37,8 @@ class EDFFile
     @_signal_item	= { }
 
     # Run through and populate _signals using the specs.
-    for i in [0..parseInt(@get_header_item( "num_signals_in_data_record"))]
-
+    for i in [1..parseInt(@get_header_item( "num_signals_in_data_record"))]
+      console.log(i);
       _specs = { }
 
       # Grab all the particular specs from the signal header..
@@ -46,7 +46,7 @@ class EDFFile
         _specs[spec.name] = @get_signal_item i, spec.name
 
       _signals.push _specs
-
+      console.log('# signals @ constructor: ', _signals.length);
   get_header_offset: ( ) ->
 # 256 + ( number of signals  * 256 )
     256 + ( @get_header_item( "num_signals_in_data_record" ) * 256 )
@@ -103,7 +103,7 @@ class EDFFile
   _get_buffer_slice: ( length, position ) ->
 # Returns a buffer of given length, filled with the
 # data from the file at given position.
-
+    #console.log('getting buffer slice', length, position);
     k = new Buffer length
     fs.readSync @_handle, k, 0, length, position
     k
@@ -154,15 +154,18 @@ class EDFFile
 
     # Get the block size in bytes.
     block_size = 0
+    #console.log('# of signals: ', _signals.length, _signals);
     for _signal in _signals
       block_size += _signal.num_samples_in_data_record * @get_header_item( "duration_of_data_record" ) * 2
-
+      #block_size += _signal.num_samples_in_data_record * 2
+      #block_size = 10800
+      #console.log('block size for sample (', _signal.label, ')', block_size);
     # Figre out how many blocks we're going to need to read.
     total_seconds	= ( end - start )
 
     # Note that this will yield more data at the end if half a block is specified.
     blocks_to_read	= Math.ceil( total_seconds / @get_header_item( "duration_of_data_record" )  )
-
+    #console.log('signal index, blocks to read', signal_index, blocks_to_read);
     # Figure out how far through the a data block we need to seek.
     # Since each particular channel can be a different length in bytes in each record.
     channel_seek = 0
@@ -176,11 +179,11 @@ class EDFFile
     records_to_skip = start * @get_header_item( "duration_of_data_record" )
 
     # Helper variable that is the base offset for seeking..
-    base_offset = ( records_to_skip * block_size ) + @get_header_offset( )
+    base_offset = ( records_to_skip * block_size ) + @get_header_offset()
 
     # Get the signal object. This contains gain and offset.
     _signal = @_get_signal_obj signal_index
-
+    console.log('signal @', signal_index, _signal)
     _samples = [ ]
     # Iterate through all the blocks to read.
     for i in [0...blocks_to_read]
@@ -209,7 +212,7 @@ class EDFFile
         exact_time = block_time + (p/2)/_signal.sample_rate
 
         # Shove into samples
-        _samples.push { "time": exact_time, "data": normal }
+        _samples.push { "time": exact_time, "data": normal, "raw": raw }
 
         # We just read 2 bytes, so increment our counter by 2.
         p += 2
