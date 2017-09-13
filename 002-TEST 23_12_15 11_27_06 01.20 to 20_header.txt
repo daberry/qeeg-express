@@ -1,2 +1,0 @@
-Version,Subject,Recording,Startdate,Startime,Bytes,Reserved,NumRec,Duration,NumSig
-0       ,VESELINCH' PATRICIA    Birth Date 07.10.58                                      ,Cadwell Easy II  23-Dec-2015  Technician RS  Physician DR SUTTON                ,23.12.15,11.27.06,768     ,                                            ,32,35      ,2

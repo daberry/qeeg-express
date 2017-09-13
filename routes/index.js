@@ -9,11 +9,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/qeeg/data', function(req,res,next) {
-  res.status(200).send(qeegLib.qeegParse('Russo 21_01_16 14_36_18 00.42 to 20.03.rec'));
+  res.status(200).send(qeegLib.qeegParse('test_r.rec'));
 });
 
 router.get('/qeeg/fft', function(req, res, next) {
-  res.status(200).send(qeegLib.fft('Russo 21_01_16 14_36_18 00.42 to 20.03.rec'));
+  console.log('handling fft request');
+  res.status(200).send(qeegLib.fft());
 });
 
 
