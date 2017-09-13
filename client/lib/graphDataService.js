@@ -13,7 +13,7 @@ var graphData = ({type, url}, callback) => {
         });
 
         console.log('qeeg data loaded', dataPoints);
-        return dataPoints;
+        callback(dataPoints);
       }.bind(this),
       error: function (err) {
         console.log('problem fetching qeeg data ', err);
@@ -25,23 +25,13 @@ var graphData = ({type, url}, callback) => {
       url: '/qeeg/fft',
       success: function (dataPoints) {
         console.log('success callback, # datapoints: ', dataPoints.length);
-        this.setState({
-          rawDataFFT: dataPoints
-        });
         dataPoints = Object.keys(dataPoints).map((curKey) => {
           return {
             x: parseFloat(curKey),
             y: parseFloat(dataPoints[curKey])
           };
         });
-
-
-        this.setState({
-          datumFFT: [{
-            key: "FFT of first epoch",
-            values: dataPoints
-          }]
-        });
+        callback(dataPoints);
         console.log('FFT data loaded', dataPoints);
       }.bind(this),
       error: function (err) {

@@ -3,13 +3,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       rawData: [],
-      rawDataFFT: [],
       datum: [{
         key: "",
         values: []
       }],
       datumFFT: [{
-        key: "FFT of first epoch",
+        key: "",
         values: []
       }]
     };
@@ -22,12 +21,26 @@ class App extends React.Component {
       url: '/qeeg/data'
     };
     this.props.getGraphData(options, (data) => {
+      console.log('graphData callback');
       this.setState({
         datum: [{
           key: "data from EEG",
           values: data
         }]
-      })
+      });
+    });
+    options = {
+      type: 'fft',
+      url: '/qeeg/fft'
+    };
+    this.props.getGraphData(options, (data) => {
+      console.log('FFT data callback');
+      this.setState({
+        datumFFT: [{
+          key: 'first epoch FFT',
+          values: data
+        }]
+      });
     });
   }
 
@@ -44,8 +57,10 @@ class App extends React.Component {
           yDomain={[-50,50]}
         />
       */
-      <qEEGChart datum={this.state.datum}/>
-
+      <div id="appContainer">
+        <div class="qeeg-chart"><QEEGChart datum={this.state.datumFFT} /></div>
+        <div class="qeeg-chart"><QEEGChart datum={this.state.datum} /></div>
+      </div>
     );
   }
 }
