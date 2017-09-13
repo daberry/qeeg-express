@@ -3,8 +3,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       rawData: [],
+      rawDataFFT: [],
       datum: [{
-        key: "qEEG test data",
+        key: "",
+        values: []
+      }],
+      datumFFT: [{
+        key: "FFT of first epoch",
         values: []
       }]
     };
@@ -12,39 +17,35 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    $.ajax({
-      type: 'GET',
-      url: '/qeeg/data',
-      success: function (dataPoints) {
-        console.log('success callback, # datapoints: ', dataPoints.length);
-        this.setState({
-          rawData: dataPoints
-        });
-        dataPoints = dataPoints.split('\n').map((cur, i) => {
-          return {
-            x: i / 200,
-            y: parseFloat(cur.replace('[', '').replace(']', ''))
-          };
-        });
-
-
-        this.setState({
-          datum: [{
-            key: "qEEG test data",
-            values: dataPoints
-          }]
-        });
-        console.log('qeeg data loaded', dataPoints);
-      }.bind(this),
-      error: function (err) {
-        console.log('problem fetching qeeg data ', err);
-      }
+    var options = {
+      type: 'data',
+      url: '/qeeg/data'
+    };
+    this.props.getGraphData(options, (data) => {
+      this.setState({
+        datum: [{
+          key: "data from EEG",
+          values: data
+        }]
+      })
     });
   }
 
   render() {
     return (
-      <NVD3Chart id="lineChart" type="lineChart" datum={this.state.datum} x="time" y="data" height="600" yDomain={[-50,50]} />
+      /*
+        <NVD3Chart
+          id="lineChart"
+          type="lineChart"
+          datum={this.state.datum}
+          x="time"
+          y="data"
+          height={400}
+          yDomain={[-50,50]}
+        />
+      */
+      <qEEGChart datum={this.state.datum}/>
+
     );
   }
 }
@@ -52,5 +53,5 @@ class App extends React.Component {
 
 
 ReactDOM.render(
-  <App />, document.getElementById('app')
+  <App getGraphData={window.graphData} />, document.getElementById('app')
 );
