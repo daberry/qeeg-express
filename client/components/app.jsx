@@ -34,7 +34,8 @@ class App extends React.Component {
       url: '/qeeg/fft'
     };
     this.props.getGraphData(options, (data) => {
-      console.log('FFT data callback');
+      //data = JSON.parse(data);
+      console.log('FFT data callback', data);
       this.setState({
         datumFFT: [{
           key: 'first epoch FFT',

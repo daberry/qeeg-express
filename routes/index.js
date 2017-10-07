@@ -58,7 +58,9 @@ router.get('/qeeg/fft', function(req, res, next) {
     }
   });
   console.log('max frequency breakdown: pre-alpha, alpha, post-alpha ', maxRangeCounts);
-  res.status(200).send(resultFFT);
+  res.status(200).send(
+    resultFFT
+  );
 });
 
 
