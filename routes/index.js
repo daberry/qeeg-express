@@ -31,12 +31,27 @@ router.get('/qeeg/fft', function(req, res, next) {
  */
   console.log('chopping FFT data');
   let fullEpochs = qeegLib.filterEpochs(3.5, 100);
-  qeegLib.getMaxPoint(fullEpochs);
+  let fullMaxes = qeegLib.getMaxPointArray(fullEpochs);
   let preAlphaEpochs = qeegLib.filterEpochs(3.5, 8);
+  let preAlphaMaxes = qeegLib.getMaxPointArray(preAlphaEpochs);
   let alphaEpochs = qeegLib.filterEpochs(8, 12);
+  let alphaMaxes = qeegLib.getMaxPointArray(alphaEpochs);
   let resultFFT = preAlphaEpochs[preAlphaEpochs.length - 1];
-  console.log(resultFFT);
   //res.status(200).send(qeegLib.FFTArray[qeeg.FFTArray.length - 1]);
+
+  let maxRangeCounts = [0, 0, 0];
+
+  fullMaxes.forEach(cur => {
+    let max = cur[0];
+    if (max >= 3.5 && max <= 8) {
+      maxRangeCounts[0]++;
+    } else if (max > 8 && max <= 12) {
+      maxRangeCounts[1]++;
+    } else if (max > 12) {
+      maxRangeCounts[2]++;
+    }
+  });
+  console.log('max frequency breakdown: pre-alpha, alpha, post-alpha ', maxRangeCounts);
   res.status(200).send(resultFFT);
 });
 
