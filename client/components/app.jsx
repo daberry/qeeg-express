@@ -58,7 +58,9 @@ class App extends React.Component {
         />
       */
       <div id="appContainer">
+        <h1>FFT</h1>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datumFFT} /></div>
+        <h1>Raw EEG Waveform</h1>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datum} /></div>
       </div>
     );
