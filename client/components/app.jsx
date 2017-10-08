@@ -83,15 +83,18 @@ class App extends React.Component {
         />
       */
       <div id="appContainer">
+        {/*
         <h2>FFT</h2>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datumFFT} /></div>
-        <h2> Over 3 HZ AUC</h2>
+        */}
+        <h1> qEEG V0.7</h1>
+        <h3> Over 3 HZ AUC</h3>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datumFullAUC} /></div>
-        <h2> Pre-Alpha (5.5 Hz - 8 Hz) AUC</h2>
+        <h3> Pre-Alpha (5.5 Hz - 8 Hz) AUC</h3>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datumPreAlphaAUC} /></div>
-        <h2> Alpha (8 Hz - 12 Hz) AUC</h2>
+        <h3> Alpha (8 Hz - 12 Hz) AUC</h3>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datumAlphaAUC} /></div>
-        <h2>Raw EEG Waveform</h2>
+        <h3>Raw EEG Waveform</h3>
         <div class="qeeg-chart"><QEEGChart datum={this.state.datum} /></div>
       </div>
     );

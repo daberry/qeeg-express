@@ -16,19 +16,6 @@ router.get('/qeeg/fft', function(req, res, next) {
   //console.log('handling fft request');
   qeegLib.fft();
 
-  /*
-    PLOT #1
-  epochs 4096 long starting at very beginning of tracing
-  filter everything below 3 Hz
-  Peak Frequency > minimum value for each epoch
-
-    PLOT #2
-  area under the curve from 5.5 Hz - 8 Hz as a function of time
-
-    PLOT #3
-  area under the curve from 8 Hz - 12 Hz as a function of time
-
- */
   //console.log('chopping FFT data');
   let fullEpochs = qeegLib.filterEpochs(3, 100);
   let fullMaxes = qeegLib.getMaxPointArray(fullEpochs);
