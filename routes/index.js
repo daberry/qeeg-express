@@ -13,7 +13,7 @@ router.get('/qeeg/data', function(req,res,next) {
 });
 
 router.get('/qeeg/fft', function(req, res, next) {
-  console.log('handling fft request');
+  //console.log('handling fft request');
   qeegLib.fft();
 
   /*
@@ -29,16 +29,19 @@ router.get('/qeeg/fft', function(req, res, next) {
   area under the curve from 8 Hz - 12 Hz as a function of time
 
  */
-  console.log('chopping FFT data');
+  //console.log('chopping FFT data');
   let fullEpochs = qeegLib.filterEpochs(3, 100);
   let fullMaxes = qeegLib.getMaxPointArray(fullEpochs);
   let fullAreas = qeegLib.getIntegralArray(fullEpochs);
+  fullAreas[0] = fullAreas[1];
 
   let preAlphaEpochs = qeegLib.filterEpochs(5.5, 8);
   let preAlphaAreas = qeegLib.getIntegralArray(preAlphaEpochs);
+  preAlphaAreas[0] = preAlphaAreas[1];
 
   let alphaEpochs = qeegLib.filterEpochs(8, 12);
   let alphaAreas = qeegLib.getIntegralArray(alphaEpochs);
+  alphaAreas[0] = alphaAreas[1];
 
   let resultFFT = preAlphaEpochs[preAlphaEpochs.length - 1];
   //res.status(200).send(qeegLib.FFTArray[qeeg.FFTArray.length - 1]);
@@ -58,9 +61,12 @@ router.get('/qeeg/fft', function(req, res, next) {
     }
   });
   console.log('max frequency breakdown: pre-alpha, alpha, post-alpha ', maxRangeCounts);
-  res.status(200).send(
-    resultFFT
-  );
+  res.status(200).send({
+    FFTData: resultFFT,
+    fullAreas: fullAreas,
+    preAlphaAreas: preAlphaAreas,
+    alphaAreas: alphaAreas
+  });
 });
 
 

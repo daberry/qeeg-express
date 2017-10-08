@@ -38,7 +38,7 @@ class EDFFile
 
     # Run through and populate _signals using the specs.
     for i in [1..parseInt(@get_header_item( "num_signals_in_data_record"))]
-      console.log(i);
+      #console.log(i);
       _specs = { }
 
       # Grab all the particular specs from the signal header..
@@ -46,7 +46,7 @@ class EDFFile
         _specs[spec.name] = @get_signal_item i, spec.name
 
       _signals.push _specs
-      console.log('# signals @ constructor: ', _signals.length);
+      #console.log('# signals @ constructor: ', _signals.length);
   get_header_offset: ( ) ->
 # 256 + ( number of signals  * 256 )
     256 + ( @get_header_item( "num_signals_in_data_record" ) * 256 )
@@ -183,7 +183,7 @@ class EDFFile
 
     # Get the signal object. This contains gain and offset.
     _signal = @_get_signal_obj signal_index
-    console.log('signal @', signal_index, _signal)
+    #console.log('signal @', signal_index, _signal)
     _samples = [ ]
     # Iterate through all the blocks to read.
     for i in [0...blocks_to_read]
