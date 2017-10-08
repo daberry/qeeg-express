@@ -78,7 +78,7 @@ class App extends React.Component {
           datum={this.state.datum}
           x="time"
           y="data"
-          height={400}
+          height={400}gi t
           yDomain={[-50,50]}
         />
       */
