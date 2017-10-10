@@ -25,6 +25,10 @@ var graphData = ({type, url}, callback) => {
       url: '/qeeg/fft',
       success: function (dataPoints) {
         console.log('success callback, # datapoints: ', dataPoints.length, dataPoints);
+        let fullKeys = Object.keys(dataPoints.fullAreas);
+        let preAlphaKeys = Object.keys(dataPoints.preAlphaAreas);
+        let alphaKeys = Object.keys(dataPoints.alphaAreas);
+
         dataPoints.FFTData = Object.keys(dataPoints.FFTData).map((curKey) => {
           return {
             x: parseFloat(curKey),
@@ -49,6 +53,7 @@ var graphData = ({type, url}, callback) => {
             y: parseFloat(dataPoints.alphaAreas[curKey])
           };
         });
+
         callback(dataPoints);
         console.log('FFT data loaded', dataPoints);
       }.bind(this),
