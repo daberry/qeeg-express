@@ -25,9 +25,12 @@ var graphData = ({type, url}, callback) => {
       url: '/qeeg/fft',
       success: function (dataPoints) {
         console.log('success callback, # datapoints: ', dataPoints.length, dataPoints);
-        let fullKeys = Object.keys(dataPoints.fullAreas);
-        let preAlphaKeys = Object.keys(dataPoints.preAlphaAreas);
-        let alphaKeys = Object.keys(dataPoints.alphaAreas);
+        let timeStep = (2048 / (200*60));
+        let getFixed = (val) => {
+          return parseFloat((val * timeStep).toFixed(2));
+        };
+
+
 
         dataPoints.FFTData = Object.keys(dataPoints.FFTData).map((curKey) => {
           return {
@@ -37,23 +40,42 @@ var graphData = ({type, url}, callback) => {
         });
         dataPoints.fullAreas = Object.keys(dataPoints.fullAreas).map((curKey, i) => {
           return {
-            x: i * (2048 / (200*60)),
+            x: getFixed(i),
             y: parseFloat(dataPoints.fullAreas[curKey])
           };
         });
         dataPoints.preAlphaAreas = Object.keys(dataPoints.preAlphaAreas).map((curKey, i) => {
           return {
-            x: i * (2048 / (200*60)),
+            x: getFixed(i),
             y: parseFloat(dataPoints.preAlphaAreas[curKey])
           };
         });
         dataPoints.alphaAreas = Object.keys(dataPoints.alphaAreas).map((curKey, i) => {
           return {
-            x: i * (2048 / (200*60)),
+            x: getFixed(i),
             y: parseFloat(dataPoints.alphaAreas[curKey])
           };
         });
-
+        dataPoints.restOfAreas = dataPoints.fullAreas.map((curPair, index) => {
+          return {
+            x: curPair.x,
+            y: curPair.y - dataPoints.preAlphaAreas[index].y - dataPoints.alphaAreas[index].y
+          };
+        });
+        dataPoints.stackedAreas = [
+          {
+            key: 'Other Activity (3 Hz - 5.5 Hz + 12+ Hz) AUC',
+            values: dataPoints.restOfAreas
+          },
+          {
+            key: 'Pre-Alpha (5.5 Hz - 8 Hz) AUC',
+            values: dataPoints.preAlphaAreas
+          },
+          {
+            key: 'Alpha (8 Hz - 12 Hz) AUC',
+            values: dataPoints.alphaAreas
+          }
+        ];
         callback(dataPoints);
         console.log('FFT data loaded', dataPoints);
       }.bind(this),

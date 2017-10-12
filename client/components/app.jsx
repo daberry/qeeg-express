@@ -41,6 +41,7 @@ class App extends React.Component {
         }]
       });
     });
+
     options = {
       type: 'fft',
       url: '/qeeg/fft'
@@ -65,17 +66,7 @@ class App extends React.Component {
           key: 'Alpha (8 Hz - 12 Hz) AUC',
           values: data.alphaAreas
         }],
-        datumStackedBars: [{
-          key: 'Stacked Bar AUC',
-          y0: 0,
-          y: 10000,
-          values: [
-            [[   0, 3840], [   0, 1600], [   0,  640], [   0,  320]], // apples
-            [[3840, 5760], [1600, 3040], [ 640, 1600], [ 320,  800]], // bananas
-            [[5760, 6720], [3040, 4000], [1600, 2240], [ 800, 1440]], // cherries
-            [[6720, 7120], [4000, 4400], [2240, 2640], [1440, 1840]], // dates
-          ]
-        }]
+        datumStackedAreas: data.stackedAreas
       });
     });
   }
@@ -100,7 +91,16 @@ class App extends React.Component {
                 <div class="qeeg-chart"><QEEGChart type="lineChart" datum={this.state.datumFullAUC} /></div>
         */}
         <h1> qEEG V0.7-z</h1>
-        <h3> Over 3 HZ AUC-z</h3>
+        <div class="qeeg-chart">
+          <NVD3Chart
+            type="stackedAreaChart"
+            datum={this.state.datumStackedAreas}
+            height={650}
+          />
+        </div>
+        {/*
+
+        <h3> Over 3 HZ AUC</h3>
         <div className="qeeg-chart">
           <NVD3Chart
             type="lineChart"
@@ -130,6 +130,7 @@ class App extends React.Component {
             height={200}
           />
         </div>
+        */}
         <h3>Raw EEG Waveform</h3>
         <div className="qeeg-chart">
           <NVD3Chart
